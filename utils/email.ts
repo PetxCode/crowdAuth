@@ -94,3 +94,40 @@ export const sendSecondEmail = async (account: any) => {
     console.log(error);
   }
 };
+
+export const resetAccountPasswordMail = async (user: any, tokenID: string) => {
+  try {
+    const accessToken: any = (await oAuth.getAccessToken()).token
+
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "codelabbest@gmail.com",
+        clientId: googleID,
+        clientSecret: googleSecret,
+        refreshToken: googleRefresh,
+        accessToken: accessToken,
+      },
+    });
+
+    const passedData = {
+      userName: user.userName,
+      url: `${URL}/${tokenID}/reset-account-password`,
+    };
+
+    const readData = path.join(__dirname, "../views/resetPassword.ejs");
+    const data = await ejs.renderFile(readData, passedData);
+
+    const mailer = {
+      from: "Congrate 🚀🚀🚀 <codelabbest@gmail.com>",
+      to: user.email,
+      subject: "Awesome",
+      html: data,
+    };
+
+    transport.sendMail(mailer);
+  } catch (error) {
+    console.log(error);
+  }
+};
