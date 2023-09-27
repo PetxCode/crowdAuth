@@ -16,7 +16,8 @@ exports.consumeAbegConnection = exports.consumeConnection = exports.publishConne
 const amqplib_1 = __importDefault(require("amqplib"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-const amqpServer = "amqp://localhost:5672";
+// const amqpServer = "amqp://localhost:5672";
+const amqpServer = "amqps://ytczyrcc:VVy6y7RE1kt3-FCMs_kV1621467bNh0t@whale.rmq.cloudamqp.com/ytczyrcc";
 const publishConnection = (queue, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const connect = yield amqplib_1.default.connect(amqpServer);
