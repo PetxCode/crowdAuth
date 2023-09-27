@@ -25,10 +25,12 @@ const createAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const tokenValue = crypto_1.default.randomBytes(2).toString("hex");
         const secretKey = crypto_1.default.randomBytes(2).toString("hex");
         const token = jsonwebtoken_1.default.sign(tokenValue, "token");
+        const salt = yield bcrypt_1.default.genSalt(10);
+        const hashed = yield bcrypt_1.default.hash(password, salt);
         const account = yield prisma.crowdAuth.create({
             data: {
                 email,
-                password,
+                password: hashed,
                 secretKey,
                 token,
                 profile: [],
