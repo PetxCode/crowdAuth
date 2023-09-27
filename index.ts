@@ -71,7 +71,7 @@ app.get(
 );
 
 app.use("/api", auth);
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log();
   console.log("Auth Service connected...");
 });

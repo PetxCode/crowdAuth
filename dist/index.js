@@ -56,7 +56,7 @@ app.get("/auth/google/callback", passport_1.default.authenticate("google", { fai
     });
 });
 app.use("/api", router_1.default);
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log();
     console.log("Auth Service connected...");
 });
