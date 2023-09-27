@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { resetAccountPasswordMail, sendFirstEmail, sendSecondEmail } from "../utils/email";
-import bcrypt from "bcrypt"
+import bcrypt, { genSalt } from "bcrypt"
 
 const prisma = new PrismaClient();
 
@@ -15,10 +15,13 @@ export const createAccount = async (req: Request, res: Response) => {
     const secretKey = crypto.randomBytes(2).toString("hex");
     const token = jwt.sign(tokenValue, "token");
 
+    const salt = await bcrypt.genSalt(10)
+    const hashed = await bcrypt.hash(password,salt)
+
     const account = await prisma.crowdAuth.create({
       data: {
         email,
-        password,
+        password:hashed,
         secretKey,
         token,
 
