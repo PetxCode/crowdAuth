@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendSecondEmail = exports.sendFirstEmail = void 0;
+exports.resetAccountPasswordMail = exports.sendSecondEmail = exports.sendFirstEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const googleapis_1 = require("googleapis");
 const path_1 = __importDefault(require("path"));
@@ -92,3 +92,36 @@ const sendSecondEmail = (account) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.sendSecondEmail = sendSecondEmail;
+const resetAccountPasswordMail = (user, tokenID) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const accessToken = (yield oAuth.getAccessToken()).token;
+        const transport = nodemailer_1.default.createTransport({
+            service: "gmail",
+            auth: {
+                type: "OAuth2",
+                user: "codelabbest@gmail.com",
+                clientId: googleID,
+                clientSecret: googleSecret,
+                refreshToken: googleRefresh,
+                accessToken: accessToken,
+            },
+        });
+        const passedData = {
+            userName: user.userName,
+            url: `${URL}/${tokenID}/reset-account-password`,
+        };
+        const readData = path_1.default.join(__dirname, "../views/resetPassword.ejs");
+        const data = yield ejs_1.default.renderFile(readData, passedData);
+        const mailer = {
+            from: "Congrate 🚀🚀🚀 <codelabbest@gmail.com>",
+            to: user.email,
+            subject: "Awesome",
+            html: data,
+        };
+        transport.sendMail(mailer);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.resetAccountPasswordMail = resetAccountPasswordMail;
