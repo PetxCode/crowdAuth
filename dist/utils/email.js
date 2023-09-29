@@ -24,7 +24,7 @@ const googleRefresh = "1//04GgN8ydoI_ZdCgYIARAAGAQSNwF-L9IrKCOkFE95PncupZNTb3WCi
 const googleURL = "https://developer.google.com/oauthplayground";
 const oAuth = new googleapis_1.google.auth.OAuth2(googleID, googleSecret, googleURL);
 oAuth.setCredentials({ access_token: googleRefresh });
-const URL = "http://localhost:3300";
+const URL = "https://crowded-auth.onrender.com";
 const sendFirstEmail = (account) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const accessToken = (yield oAuth.getAccessToken()).token;
