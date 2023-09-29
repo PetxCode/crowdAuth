@@ -4,7 +4,7 @@ import auth from "./router/router";
 import passport from "passport";
 import "./utils/social";
 import cookieSession from "cookie-session";
-import { consumeAbegConnection, consumeConnection } from "./utils/connection";
+import { consumeAbegConnection, consumeConnection, } from "./utils/connection";
 import jwt from "jsonwebtoken";
 
 const port: number = 3300;
@@ -82,3 +82,5 @@ process.on("unhandledRejection",()=>{
 
 consumeConnection("profile");
 consumeAbegConnection("beg");
+
+

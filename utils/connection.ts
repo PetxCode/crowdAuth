@@ -29,17 +29,34 @@ export const consumeConnection = async (queue: string) => {
       const account: any = await prisma.crowdAuth.findUnique({
         where: { id: myData?.userID },
       });
+  
+      if(account.profile.length === 0){
+        
+        account?.profile.push(myData);
+  
+        await prisma.crowdAuth.update({
+          where: { id: myData?.userID },
+          data: {
+            profile: account?.profile,
+          },
+        });
 
-      account?.profile.push(myData);
+        }else{
 
-      const prof = await prisma.crowdAuth.update({
-        where: { id: myData?.userID },
-        data: {
-          profile: account?.profile,
-        },
-      });
+         let newAccount = account?.profile.filter((el:any) => {
+            return el.id === myData.id
+          })
 
-      console.log(prof);
+          newAccount?.profile.push(myData)
+  
+          await prisma.crowdAuth.update({
+            where: { id: myData?.userID },
+            data: {
+              profile: newAccount?.profile,
+            },
+          });
+        }
+
       await channel.ack(message);
     });
   } catch (error) {
@@ -69,7 +86,7 @@ export const consumeAbegConnection = async (queue: string) => {
         },
       });
 
-      console.log(prof);
+     
       await channel.ack(message);
     });
   } catch (error) {
