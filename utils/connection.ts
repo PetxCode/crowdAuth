@@ -30,32 +30,18 @@ export const consumeConnection = async (queue: string) => {
         where: { id: myData?.userID },
       });
   
-      if(account.profile.length === 0){
+   
         
         account?.profile.push(myData);
   
         await prisma.crowdAuth.update({
           where: { id: myData?.userID },
           data: {
-            profile: account?.profile,
+            profile: account?.profile[account?.profile.length - 1],
           },
         });
 
-        }else{
-
-         let newAccount = account?.profile.filter((el:any) => {
-            return el.id === myData.id
-          })
-
-          newAccount?.profile.push(myData)
-  
-          await prisma.crowdAuth.update({
-            where: { id: myData?.userID },
-            data: {
-              profile: newAccount?.profile,
-            },
-          });
-        }
+        
 
       await channel.ack(message);
     });

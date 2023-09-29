@@ -39,27 +39,13 @@ const consumeConnection = (queue) => __awaiter(void 0, void 0, void 0, function*
             const account = yield prisma.crowdAuth.findUnique({
                 where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
             });
-            if (account.profile.length === 0) {
-                account === null || account === void 0 ? void 0 : account.profile.push(myData);
-                yield prisma.crowdAuth.update({
-                    where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
-                    data: {
-                        profile: account === null || account === void 0 ? void 0 : account.profile,
-                    },
-                });
-            }
-            else {
-                let newAccount = account === null || account === void 0 ? void 0 : account.profile.filter((el) => {
-                    return el.id === myData.id;
-                });
-                newAccount === null || newAccount === void 0 ? void 0 : newAccount.profile.push(myData);
-                yield prisma.crowdAuth.update({
-                    where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
-                    data: {
-                        profile: newAccount === null || newAccount === void 0 ? void 0 : newAccount.profile,
-                    },
-                });
-            }
+            account === null || account === void 0 ? void 0 : account.profile.push(myData);
+            yield prisma.crowdAuth.update({
+                where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
+                data: {
+                    profile: account === null || account === void 0 ? void 0 : account.profile[(account === null || account === void 0 ? void 0 : account.profile.length) - 1],
+                },
+            });
             yield channel.ack(message);
         }));
     }
