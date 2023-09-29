@@ -170,7 +170,7 @@ const SignInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (user) {
             const check = yield bcrypt_1.default.compare(password, user.password);
             if (check) {
-                if (user.verify && user.token !== "") {
+                if (user.verify && user.token === "") {
                     const token = jsonwebtoken_1.default.sign({
                         id: user.id,
                     }, "secret", { expiresIn: "3d" });

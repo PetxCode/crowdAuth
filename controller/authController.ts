@@ -169,7 +169,7 @@ export const SignInUser = async (req:Request,res:Response)=>{
     const check = await bcrypt.compare(password, user.password);
   
     if (check) {
-      if (user.verify && user.token !== "") {
+      if (user.verify && user.token === "") {
         const token = jwt.sign(
           {
             id: user.id,
