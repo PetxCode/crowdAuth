@@ -40,12 +40,13 @@ const consumeConnection = (queue) => __awaiter(void 0, void 0, void 0, function*
                 where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
             });
             account === null || account === void 0 ? void 0 : account.profile.push(myData);
-            yield prisma.crowdAuth.update({
+            const profile = yield prisma.crowdAuth.update({
                 where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
                 data: {
                     profile: account === null || account === void 0 ? void 0 : account.profile[(account === null || account === void 0 ? void 0 : account.profile.length) - 1],
                 },
             });
+            console.log(profile);
             yield channel.ack(message);
         }));
     }
