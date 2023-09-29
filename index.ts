@@ -76,5 +76,9 @@ app.listen(process.env.PORT || port, () => {
   console.log("Auth Service connected...");
 });
 
+process.on("unhandledRejection",()=>{
+  
+})
+
 consumeConnection("profile");
 consumeAbegConnection("beg");

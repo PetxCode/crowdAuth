@@ -37,7 +37,7 @@ export const sendFirstEmail = async (account: any) => {
     const token = jwt.sign({ id: account.id }, "secret");
 
     const sharedData = {
-      url: `${URL}/api/${token}/first-mail`,
+      url: `${URL}/api/${token}/verify-account`,
       code: account.secretKey,
     };
 

@@ -121,14 +121,16 @@ export const accountVerification = async (req: Request, res: Response) => {
   try {
     const { token } = req.params;
 
+
     jwt.verify(token, "secret", async (error, payload: any) => {
       if (error) {
         throw new Error();
       } else {
+
         const account = await prisma.crowdAuth.findUnique({
           where: { id: payload.id },
         });
-
+        
         if (account) {
           await prisma.crowdAuth.update({
             where: { id: payload.id },

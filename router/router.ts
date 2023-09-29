@@ -19,7 +19,7 @@ router.route("/sign-in-account").post(SignInUser);
 
 router.route("/:token/verify-account").get(firstAccountVerification);
 
-router.route("/:token/verify-account").get(accountVerification);
+router.route("/:token/verify-account-start").get(accountVerification);
 
 router.route("/all-account").get(allAccount);
 

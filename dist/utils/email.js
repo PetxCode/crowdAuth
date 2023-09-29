@@ -41,7 +41,7 @@ const sendFirstEmail = (account) => __awaiter(void 0, void 0, void 0, function* 
         });
         const token = jsonwebtoken_1.default.sign({ id: account.id }, "secret");
         const sharedData = {
-            url: `${URL}/api/${token}/first-mail`,
+            url: `${URL}/api/${token}/verify-account`,
             code: account.secretKey,
         };
         const pathData = path_1.default.join(__dirname, "../views/FirstMailSent.ejs");
