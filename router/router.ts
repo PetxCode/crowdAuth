@@ -1,6 +1,7 @@
 import express from "express";
 import {
   SignInUser,
+  UpdateUser,
   accountVerification,
   allAccount,
   changeAccountPassword,
@@ -31,8 +32,6 @@ router.route("/reset-account-password").patch(resetAccountPassword);
 
 router.route("/:token/change-account-password").patch(changeAccountPassword);
 
-
-
-
+router.route("/:accountID/update-account").patch(UpdateUser);
 
 export default router;

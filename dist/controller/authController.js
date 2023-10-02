@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.changeAccountPassword = exports.resetAccountPassword = exports.SignInUser = exports.accountVerification = exports.firstAccountVerification = exports.getSingleAccount = exports.allAccount = exports.createAccount = void 0;
+exports.UpdateUser = exports.deleteUser = exports.changeAccountPassword = exports.resetAccountPassword = exports.SignInUser = exports.accountVerification = exports.firstAccountVerification = exports.getSingleAccount = exports.allAccount = exports.createAccount = void 0;
 const client_1 = require("@prisma/client");
 const crypto_1 = __importDefault(require("crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -165,7 +165,7 @@ const SignInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { email, password } = req.body;
         const user = yield prisma.crowdAuth.findUnique({
-            where: { email }
+            where: { email },
         });
         if (user) {
             const check = yield bcrypt_1.default.compare(password, user.password);
@@ -199,7 +199,7 @@ const SignInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         return res.status(404).json({
-            message: "Error signing in"
+            message: "Error signing in",
         });
     }
 });
@@ -208,14 +208,14 @@ const resetAccountPassword = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const { email } = req.body;
         const user = yield prisma.crowdAuth.findUnique({
-            where: { email }
+            where: { email },
         });
         if ((user === null || user === void 0 ? void 0 : user.verify) && user.token === "") {
             const token = jsonwebtoken_1.default.sign({ id: user.id }, "secret");
             yield prisma.crowdAuth.update({
                 where: { id: user.id },
                 data: {
-                    token
+                    token,
                 },
             });
             (0, email_1.resetAccountPasswordMail)(user, token).then(() => {
@@ -253,7 +253,7 @@ const changeAccountPassword = (req, res) => __awaiter(void 0, void 0, void 0, fu
             }
         });
         const user = yield prisma.crowdAuth.findUnique({
-            where: { id: getID }
+            where: { id: getID },
         });
         if ((user === null || user === void 0 ? void 0 : user.verify) && user.token !== "") {
             const salt = yield bcrypt_1.default.genSalt(10);
@@ -286,10 +286,10 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { userID } = req.params;
         const Delete = yield prisma.crowdAuth.delete({
-            where: { id: userID }
+            where: { id: userID },
         });
         return res.status(201).json({
-            message: `${Delete.email} your account has been deleted`
+            message: `${Delete.email} your account has been deleted`,
         });
     }
     catch (error) {
@@ -300,3 +300,23 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
+const UpdateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { accountID } = req.params;
+        const update = yield prisma.crowdAuth.update({
+            where: { id: accountID },
+            data: req.body,
+        });
+        return res.status(201).json({
+            message: "updated",
+            data: update,
+        });
+    }
+    catch (error) {
+        return res.status(404).json({
+            message: "error updatng",
+            data: error,
+        });
+    }
+});
+exports.UpdateUser = UpdateUser;

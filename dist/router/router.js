@@ -15,4 +15,5 @@ router.route("/:accountID/single-account").get(authController_1.getSingleAccount
 router.route("/:userID/delete").delete(authController_1.deleteUser);
 router.route("/reset-account-password").patch(authController_1.resetAccountPassword);
 router.route("/:token/change-account-password").patch(authController_1.changeAccountPassword);
+router.route("/:accountID/update-account").patch(authController_1.UpdateUser);
 exports.default = router;
