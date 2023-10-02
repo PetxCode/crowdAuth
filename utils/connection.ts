@@ -29,7 +29,9 @@ export const consumeConnection = async (queue: string) => {
       const account: any = await prisma.crowdAuth.findUnique({
         where: { id: myData?.userID },
       });
+      
         account?.profile.push(myData); 
+
         const profile = await prisma.crowdAuth.update({
           where: { id: myData?.userID },
           data: {

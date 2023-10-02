@@ -312,7 +312,9 @@ export const UpdateUser = async (req: Request, res: Response) => {
     const { accountID } = req.params;
     const update = await prisma.crowdAuth.update({
       where: { id: accountID },
-      data: req.body,
+      data: {
+        profile: req.body
+      },
     });
 
     return res.status(201).json({

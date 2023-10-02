@@ -89,7 +89,7 @@ process.on("uncaughtException",(reason:any)=>{
   })
 })
 
-consumeConnection("profile");
+consumeConnection("profiled");
 consumeAbegConnection("beg");
 
 
