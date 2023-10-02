@@ -71,13 +71,20 @@ app.get(
 );
 
 app.use("/api", auth);
-app.listen(process.env.PORT || port, () => {
+const server = app.listen(process.env.PORT || port, () => {
   console.log();
   console.log("Auth Service connected...");
 });
 
 process.on("unhandledRejection",()=>{
-  
+  console.log("Error due to unhandledRejection")
+process.exit(1)
+})
+process.on("uncaughtException",()=>{
+  console.log("Error due to uncaughtException")
+  server.close(()=>{
+    process.exit(1)
+  })
 })
 
 consumeConnection("profile");

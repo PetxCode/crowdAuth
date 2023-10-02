@@ -56,11 +56,19 @@ app.get("/auth/google/callback", passport_1.default.authenticate("google", { fai
     });
 });
 app.use("/api", router_1.default);
-app.listen(process.env.PORT || port, () => {
+const server = app.listen(process.env.PORT || port, () => {
     console.log();
     console.log("Auth Service connected...");
 });
 process.on("unhandledRejection", () => {
+    console.log("Error due to unhandledRejection");
+    process.exit(1);
+});
+process.on("uncaughtException", () => {
+    console.log("Error due to uncaughtException");
+    server.close(() => {
+        process.exit(1);
+    });
 });
 (0, connection_1.consumeConnection)("profile");
 (0, connection_1.consumeAbegConnection)("beg");
