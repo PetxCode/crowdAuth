@@ -62,10 +62,12 @@ const server = app.listen(process.env.PORT || port, () => {
 });
 process.on("unhandledRejection", (error) => {
     console.log("Error due to unhandledRejection");
+    console.log(error);
     process.exit(1);
 });
 process.on("uncaughtException", (reason) => {
     console.log("Error due to uncaughtException");
+    console.log(reason);
     server.close(() => {
         process.exit(1);
     });
