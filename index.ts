@@ -76,11 +76,11 @@ const server = app.listen(process.env.PORT || port, () => {
   console.log("Auth Service connected...");
 });
 
-process.on("unhandledRejection",()=>{
+process.on("unhandledRejection",(error)=>{
   console.log("Error due to unhandledRejection")
 process.exit(1)
 })
-process.on("uncaughtException",()=>{
+process.on("uncaughtException",(reason)=>{
   console.log("Error due to uncaughtException")
   server.close(()=>{
     process.exit(1)
