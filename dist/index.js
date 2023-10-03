@@ -11,7 +11,7 @@ require("./utils/social");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const connection_1 = require("./utils/connection");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const port = 3300;
+const port = 3100;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use(express_1.default.json());

@@ -4,10 +4,10 @@ import auth from "./router/router";
 import passport from "passport";
 import "./utils/social";
 import cookieSession from "cookie-session";
-import { consumeAbegConnection, consumeConnection, } from "./utils/connection";
+import { consumeAbegConnection, consumeConnection } from "./utils/connection";
 import jwt from "jsonwebtoken";
 
-const port: number = 3300;
+const port: number = 3100;
 const app: Application = express();
 
 app.use(cors({ origin: "*" }));
@@ -76,20 +76,18 @@ const server = app.listen(process.env.PORT || port, () => {
   console.log("Auth Service connected...");
 });
 
-process.on("unhandledRejection",(error:Error)=>{
-  console.log("Error due to unhandledRejection")
-  console.log(error)
-process.exit(1)
-})
-process.on("uncaughtException",(reason:any)=>{
-  console.log("Error due to uncaughtException")
-  console.log(reason)
-  server.close(()=>{
-    process.exit(1)
-  })
-})
+process.on("unhandledRejection", (error: Error) => {
+  console.log("Error due to unhandledRejection");
+  console.log(error);
+  process.exit(1);
+});
+process.on("uncaughtException", (reason: any) => {
+  console.log("Error due to uncaughtException");
+  console.log(reason);
+  server.close(() => {
+    process.exit(1);
+  });
+});
 
 consumeConnection("profiled");
 consumeAbegConnection("beg");
-
-
