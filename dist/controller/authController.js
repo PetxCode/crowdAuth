@@ -173,6 +173,7 @@ const SignInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 if (user.verify && user.token === "") {
                     const token = jsonwebtoken_1.default.sign({
                         id: user.id,
+                        email: user.email,
                     }, "secret", { expiresIn: "3d" });
                     return res.status(201).json({
                         message: `Welcome back ${user.email}`,

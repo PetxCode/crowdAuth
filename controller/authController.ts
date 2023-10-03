@@ -175,6 +175,7 @@ export const SignInUser = async (req: Request, res: Response) => {
           const token = jwt.sign(
             {
               id: user.id,
+              email: user.email,
             },
             "secret",
             { expiresIn: "3d" }
