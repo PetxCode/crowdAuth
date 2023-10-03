@@ -66,7 +66,7 @@ const consumeAbegConnection = (queue) => __awaiter(void 0, void 0, void 0, funct
                 where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
             });
             account === null || account === void 0 ? void 0 : account.abeg.push(myData);
-            const prof = yield prisma.crowdAuth.update({
+            yield prisma.crowdAuth.update({
                 where: { id: myData === null || myData === void 0 ? void 0 : myData.userID },
                 data: {
                     abeg: account === null || account === void 0 ? void 0 : account.abeg,

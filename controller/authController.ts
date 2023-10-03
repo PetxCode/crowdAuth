@@ -7,7 +7,7 @@ import {
   sendFirstEmail,
   sendSecondEmail,
 } from "../utils/email";
-import bcrypt, { genSalt } from "bcrypt";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -313,7 +313,7 @@ export const UpdateUser = async (req: Request, res: Response) => {
     const update = await prisma.crowdAuth.update({
       where: { id: accountID },
       data: {
-        profile: req.body
+        profile: req.body,
       },
     });
 

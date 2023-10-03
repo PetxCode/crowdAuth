@@ -4,7 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // const amqpServer = "amqp://localhost:5672";
-const amqpServer = "amqps://ytczyrcc:VVy6y7RE1kt3-FCMs_kV1621467bNh0t@whale.rmq.cloudamqp.com/ytczyrcc";
+const amqpServer =
+  "amqps://ytczyrcc:VVy6y7RE1kt3-FCMs_kV1621467bNh0t@whale.rmq.cloudamqp.com/ytczyrcc";
 
 export const publishConnection = async (queue: string, data: any) => {
   try {
@@ -29,17 +30,17 @@ export const consumeConnection = async (queue: string) => {
       const account: any = await prisma.crowdAuth.findUnique({
         where: { id: myData?.userID },
       });
-      
-        account?.profile.push(myData); 
 
-        const profile = await prisma.crowdAuth.update({
-          where: { id: myData?.userID },
-          data: {
-            profile: account?.profile[account?.profile.length - 1],
-          },
-        });
+      account?.profile.push(myData);
 
-        console.log(profile)
+      const profile = await prisma.crowdAuth.update({
+        where: { id: myData?.userID },
+        data: {
+          profile: account?.profile[account?.profile.length - 1],
+        },
+      });
+
+      console.log(profile);
       await channel.ack(message);
     });
   } catch (error) {
@@ -62,14 +63,13 @@ export const consumeAbegConnection = async (queue: string) => {
 
       account?.abeg.push(myData);
 
-      const prof = await prisma.crowdAuth.update({
+      await prisma.crowdAuth.update({
         where: { id: myData?.userID },
         data: {
           abeg: account?.abeg,
         },
       });
 
-     
       await channel.ack(message);
     });
   } catch (error) {

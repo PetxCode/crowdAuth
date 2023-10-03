@@ -73,4 +73,4 @@ process.on("uncaughtException", (reason) => {
     });
 });
 (0, connection_1.consumeConnection)("profiled");
-(0, connection_1.consumeAbegConnection)("beggings");
+(0, connection_1.consumeAbegConnection)("beg");
