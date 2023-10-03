@@ -306,7 +306,7 @@ const UpdateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const update = yield prisma.crowdAuth.update({
             where: { id: accountID },
             data: {
-                profile: req.body
+                profile: req.body,
             },
         });
         return res.status(201).json({
